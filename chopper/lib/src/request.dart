@@ -206,6 +206,11 @@ Future<http.MultipartRequest> toMultipartRequest(
           ' - MultipartFile (from package:http)',
         );
       }
+    } else if (part.value is Iterable) {
+      baseRequest.fields.addAll({
+        for (var i = 0; i < part.value.length; i++)
+          '${part.name}${' ' * i}': part.value[i].toString()
+      });
     } else {
       baseRequest.fields[part.name] = part.value.toString();
     }
